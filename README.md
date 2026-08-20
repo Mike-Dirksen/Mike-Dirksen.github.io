@@ -10,7 +10,7 @@ Run `python3 -m http.server 8000` from the repository root, then open `http://lo
 
 - `index.html` — About/home page
 - `research/` — research index and project pages
-- `cv/` — concise HTML CV; add a canonical PDF under `assets/cv/`
+- `cv/` — concise HTML résumé with a canonical public PDF under `assets/cv/`
 - `blog/` — writing index and article pages
 - `library/` — annotated library with client-side filters
 - `assets/css/site.css` — design system and responsive/print styles
@@ -23,7 +23,7 @@ Create a directory with a lowercase hyphenated slug and an `index.html` file ben
 
 ## Updating the CV
 
-Place a public, metadata-reviewed PDF at `assets/cv/Michael-Dirksen-CV.pdf`, then add an ordinary download link and desktop embed to `cv/index.html`. Keep that URL stable when replacing the PDF.
+Replace `assets/cv/Michael-Dirksen-Resume.pdf` with a public, metadata-reviewed PDF, keeping the filename stable. Confirm that private contact details are removed before publishing.
 
 ## Deployment
 
