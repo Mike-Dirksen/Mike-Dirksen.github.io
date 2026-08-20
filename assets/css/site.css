@@ -56,12 +56,14 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 .section { padding-block: clamp(3.5rem, 8vw, 6.5rem); border-top: 1px solid var(--line); }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2.3rem; }
 .section-head p { max-width: 34rem; margin: 0; color: var(--muted); }
+.updated-note { margin: -.85rem 0 0; color: var(--muted); font-size: .78rem; }
 .currently { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block: 1px solid var(--line); }
 .currently div { padding: 1.25rem 1rem 1.25rem 0; }
 .currently div:nth-child(odd) { border-right: 1px solid var(--line); }
 .currently div:nth-child(even) { padding-left: 1.5rem; }
 .currently strong { display: block; color: var(--accent); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; }
 .currently span { display: block; margin-top: .25rem; }
+.currently small { display: block; margin-top: .3rem; color: var(--muted); font-size: .9rem; }
 
 .research-list { display: grid; gap: 0; }
 .research-card { display: grid; grid-template-columns: minmax(14rem, 36%) 1fr; gap: clamp(1.5rem, 5vw, 4rem); padding-block: 2.5rem; border-top: 1px solid var(--line); }
@@ -96,6 +98,10 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 .back { display: inline-block; margin-bottom: 2rem; }
 
 .cv-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+.document-toggle { display: inline-flex; gap: .25rem; margin-top: 1.5rem; padding: .25rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.document-toggle-button { min-width: 6rem; padding: .55rem .9rem; border: 0; border-radius: calc(var(--radius) - .2rem); background: transparent; color: var(--muted); font: inherit; font-weight: 700; cursor: pointer; }
+.document-toggle-button[aria-pressed="true"] { background: var(--accent); color: white; }
+.document-toggle-button:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 2px; }
 .button { display: inline-block; padding: .65rem .95rem; border: 1px solid var(--accent); border-radius: var(--radius); background: var(--accent); color: white; font-weight: 650; text-decoration: none; }
 .button.secondary { background: transparent; color: var(--accent-strong); }
 .timeline { display: grid; gap: 2rem; }

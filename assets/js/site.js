@@ -9,6 +9,43 @@ if (toggle && nav) {
   });
 }
 
+const documentChoices = document.querySelectorAll('[data-document-choice]');
+const documentPreview = document.querySelector('[data-document-preview]');
+const documentOpen = document.querySelector('[data-document-open]');
+const documentDownload = document.querySelector('[data-document-download]');
+
+if (documentChoices.length && documentPreview && documentOpen && documentDownload) {
+  const documents = {
+    resume: {
+      label: 'résumé',
+      url: '/assets/cv/Michael-Dirksen-Resume.pdf',
+      filename: 'Michael-Dirksen-Resume.pdf',
+    },
+    cv: {
+      label: 'CV',
+      url: '/assets/cv/Michael-Dirksen-CV.pdf',
+      filename: 'Michael-Dirksen-CV.pdf',
+    },
+  };
+
+  documentChoices.forEach((choice) => {
+    choice.addEventListener('click', () => {
+      const selected = documents[choice.dataset.documentChoice];
+      if (!selected) return;
+      documentChoices.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button === choice));
+      });
+      documentPreview.src = selected.url;
+      documentPreview.title = `Michael Dirksen ${selected.label} PDF`;
+      documentOpen.href = selected.url;
+      documentOpen.textContent = `Open ${selected.label} PDF`;
+      documentDownload.href = selected.url;
+      documentDownload.download = selected.filename;
+      documentDownload.textContent = `Download ${selected.label}`;
+    });
+  });
+}
+
 const filters = document.querySelector('[data-library-filters]');
 if (filters) {
   const items = [...document.querySelectorAll('[data-library-item]')];
