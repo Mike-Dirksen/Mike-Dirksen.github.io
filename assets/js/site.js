@@ -2,10 +2,31 @@ const toggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.nav-list');
 
 if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const isOpen = nav.dataset.open === 'true';
-    nav.dataset.open = String(!isOpen);
-    toggle.setAttribute('aria-expanded', String(!isOpen));
+  const setOpen = (open) => {
+    nav.dataset.open = String(open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    setOpen(nav.dataset.open !== 'true');
+  });
+
+  // A menu that only closes via its own button is a trap, so cover the
+  // three ways people expect to dismiss one.
+  document.addEventListener('click', (event) => {
+    if (nav.dataset.open !== 'true') return;
+    if (!nav.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || nav.dataset.open !== 'true') return;
+    setOpen(false);
+    toggle.focus();
+  });
+
+  nav.addEventListener('click', (event) => {
+    if (event.target.closest('a')) setOpen(false);
   });
 }
 
