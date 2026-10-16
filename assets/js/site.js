@@ -315,3 +315,107 @@ if (cursorDot && cursorRing
   document.addEventListener('mouseleave', () => show(false));
   document.addEventListener('mouseenter', () => show(true));
 }
+
+// Lines that cycle: the quips and the "Thinking about" entry. Copy lives here
+// rather than in the markup because every line is drawn from the same deck.
+const QUIPS = [
+  "P(Eating | ¬ Sleeping) = .93",
+  "Currently Something Cool (Probably)",
+  "Oh Hello There!",
+  "I've got a feeling we're not in Nebraska anymore",
+  "We're gonna need a bigger boat",
+  "Long time no see",
+  "Pondering my next meal",
+  "Life, uh, finds a way",
+  "Just keep swimming",
+  "There is no spoon",
+  "“Quit, don't quit. Noodles, don't noodles.” – Master Oogway",
+  "P(Productive) ∈ (0,1)",
+  "This statement is statistically insignificant",
+  "Overfitting since 2006",
+  "Locally optimal, globally questionable",
+  "In search of a fixed point",
+  "Hairy Ball Theorem (yeah that's it)",
+  "404: quote not found",
+  "I think, therefore I procrastinate",
+  "Proof left to reader",
+  "The rumors are mostly true",
+  "Not a robot (legally required to say this)",
+  "I've been expecting you (not really)",
+  "Somehow this is a real website",
+  "Results may vary",
+  "Surprisingly functional",
+  "Last seen making questionable decisions",
+  "Probably in the wrong tab",
+  "One must imagine Sisyphus well-fed",
+  "“To eat, or not to eat” — Shakespeare (Probably)",
+  "42",
+  "This is fine",
+  "Maidenless behavior",
+  "This must be the place",
+  "Insert Quip Here",
+  "3.1415926535…",
+  "Hey you. You're finally awake.",
+  "The cake is a lie",
+  "Running on ε",
+  "Markets can remain irrational longer than I can remain hungry",
+  "Garbage in, garbage out",
+  "Not financial advice",
+  "E[Website] = 0",
+  "I'll take 1 arbitrage please",
+  "Rebooting…",
+  "Proof: Ask a toddler on the street",
+  "Existence ✓, uniqueness..?",
+];
+
+const THINKING = [
+  "Formalizing morality through differential forms on spaces of internal values",
+  "Modeling private equity valuations as quantum states",
+  "Redefining multivariate variance through k-nearest-neighbor demeaning",
+  "Building a rigorous mathematical framework for behavioral economics",
+  "Finding optimal trading strategies across volatility smiles",
+  "Hierarchical Risk Parity as an alternative to mean-variance optimization",
+  "What I'm having for lunch tomorrow",
+  "Modeling identity and social norms as a dynamical system",
+  "Whether markets can be efficient when information is costly",
+];
+
+const shuffled = (list) => {
+  const deck = [...list];
+  for (let i = deck.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
+};
+
+const holdStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const cycleCopy = (nodes, list, period) => {
+  if (!nodes.length) return;
+  const deck = shuffled(list);
+  // Offsetting each node by its index and advancing by the node count keeps the
+  // lines on screen from ever landing on the same entry.
+  let tick = 0;
+  const paint = (fade) => {
+    nodes.forEach((node, k) => {
+      const text = deck[(k + nodes.length * tick) % deck.length];
+      if (!fade) {
+        node.textContent = text;
+        return;
+      }
+      node.dataset.fading = 'true';
+      setTimeout(() => {
+        node.textContent = text;
+        delete node.dataset.fading;
+      }, 300);
+    });
+  };
+  paint(false);
+  // A reader who asked for less motion still gets a fresh line each visit.
+  if (holdStill) return;
+  setInterval(() => { tick += 1; paint(true); }, period);
+};
+
+cycleCopy([...document.querySelectorAll('[data-quip]')], QUIPS, 9000);
+cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, 6500);

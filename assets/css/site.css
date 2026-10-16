@@ -239,6 +239,9 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 /* Quips: muted italic asides in light, glowing fluorescent ink in dark. */
 .quip { margin: .9rem 0 0; color: var(--muted); font-size: .95rem; font-style: var(--quip-style); }
 .quip::before { content: "\2734\00a0"; color: var(--warm); font-style: normal; }
+/* Cycling copy crossfades rather than popping to the next line. */
+[data-quip], [data-thinking] { transition: opacity .3s ease; }
+[data-fading="true"] { opacity: 0; }
 :root[data-theme="dark"] .quip { font-family: var(--mono); color: var(--warm); font-size: .88rem; letter-spacing: -.01em; }
 
 .section { padding-block: clamp(3.5rem, 8vw, 6.5rem); border-top: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line)); scroll-margin-top: 6rem; }
