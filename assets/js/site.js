@@ -316,8 +316,8 @@ if (cursorDot && cursorRing
   document.addEventListener('mouseenter', () => show(true));
 }
 
-// Lines that cycle: the quips and the "Thinking about" entry. Copy lives here
-// rather than in the markup because every line is drawn from the same deck.
+// Copy that varies per visit: the quip lines and the "Thinking about" entry.
+// It lives here rather than in the markup because each line is drawn from a deck.
 const QUIPS = [
   "P(Eating | ¬ Sleeping) = .93",
   "Currently Something Cool (Probably)",
@@ -412,10 +412,12 @@ const cycleCopy = (nodes, list, period) => {
     });
   };
   paint(false);
-  // A reader who asked for less motion still gets a fresh line each visit.
-  if (holdStill) return;
+  // A period of 0, or a reader who asked for less motion, means the opening
+  // pick stands until the next page load.
+  if (holdStill || !period) return;
   setInterval(() => { tick += 1; paint(true); }, period);
 };
 
-cycleCopy([...document.querySelectorAll('[data-quip]')], QUIPS, 9000);
-cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, 6500);
+cycleCopy([...document.querySelectorAll('[data-quip]')], QUIPS, 60000);
+// "Thinking about" settles on one entry per visit instead of cycling.
+cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, 0);
