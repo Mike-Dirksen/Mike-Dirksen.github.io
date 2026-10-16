@@ -316,56 +316,63 @@ if (cursorDot && cursorRing
   document.addEventListener('mouseenter', () => show(true));
 }
 
-// Copy that varies per visit: the quip lines and the "Thinking about" entry.
-// It lives here rather than in the markup because each line is drawn from a deck.
-const QUIPS = [
-  "P(Eating | ¬ Sleeping) = .93",
-  "Currently Something Cool (Probably)",
+// Copy that varies per visit. The quips are split by where they sit: greeting
+// and personality at the top, method jokes by the research, borrowed lines by
+// the library.
+const QUIPS_HERO = [
   "Oh Hello There!",
-  "I've got a feeling we're not in Nebraska anymore",
-  "We're gonna need a bigger boat",
+  "Hey you. You're finally awake.",
   "Long time no see",
+  "I've been expecting you (not really)",
+  "Currently Something Cool (Probably)",
+  "I've got a feeling we're not in Nebraska anymore",
+  "Not a robot (legally required to say this)",
+  "Somehow this is a real website",
+  "Surprisingly functional",
+  "This is fine",
+  "This must be the place",
+  "Insert Quip Here",
+  "Rebooting…",
+  "The rumors are mostly true",
+  "Last seen making questionable decisions",
+  "Probably in the wrong tab",
+  "Results may vary",
+  "P(Eating | ¬ Sleeping) = .93",
   "Pondering my next meal",
-  "Life, uh, finds a way",
-  "Just keep swimming",
-  "There is no spoon",
-  "“Quit, don't quit. Noodles, don't noodles.” – Master Oogway",
+  "E[Website] = 0",
+  "404: quote not found",
+  "Running on ε",
+];
+
+const QUIPS_RESEARCH = [
   "P(Productive) ∈ (0,1)",
   "This statement is statistically insignificant",
   "Overfitting since 2006",
   "Locally optimal, globally questionable",
   "In search of a fixed point",
   "Hairy Ball Theorem (yeah that's it)",
-  "404: quote not found",
-  "I think, therefore I procrastinate",
   "Proof left to reader",
-  "The rumors are mostly true",
-  "Not a robot (legally required to say this)",
-  "I've been expecting you (not really)",
-  "Somehow this is a real website",
-  "Results may vary",
-  "Surprisingly functional",
-  "Last seen making questionable decisions",
-  "Probably in the wrong tab",
-  "One must imagine Sisyphus well-fed",
-  "“To eat, or not to eat” — Shakespeare (Probably)",
-  "42",
-  "This is fine",
-  "Maidenless behavior",
-  "This must be the place",
-  "Insert Quip Here",
-  "3.1415926535…",
-  "Hey you. You're finally awake.",
-  "The cake is a lie",
-  "Running on ε",
-  "Markets can remain irrational longer than I can remain hungry",
+  "Existence ✓, uniqueness..?",
+  "Proof: Ask a toddler on the street",
   "Garbage in, garbage out",
   "Not financial advice",
-  "E[Website] = 0",
+  "Markets can remain irrational longer than I can remain hungry",
   "I'll take 1 arbitrage please",
-  "Rebooting…",
-  "Proof: Ask a toddler on the street",
-  "Existence ✓, uniqueness..?",
+  "3.1415926535…",
+];
+
+const QUIPS_LIBRARY = [
+  "We're gonna need a bigger boat",
+  "Life, uh, finds a way",
+  "Just keep swimming",
+  "There is no spoon",
+  "“Quit, don't quit. Noodles, don't noodles.” – Master Oogway",
+  "The cake is a lie",
+  "“To eat, or not to eat” — Shakespeare (Probably)",
+  "One must imagine Sisyphus well-fed",
+  "I think, therefore I procrastinate",
+  "Maidenless behavior",
+  "42",
 ];
 
 const THINKING = [
@@ -379,6 +386,8 @@ const THINKING = [
   "Modeling identity and social norms as a dynamical system",
   "Whether markets can be efficient when information is costly",
 ];
+
+const ROTATE_MS = 65000;
 
 const shuffled = (list) => {
   const deck = [...list];
@@ -394,8 +403,8 @@ const holdStill = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const cycleCopy = (nodes, list, period) => {
   if (!nodes.length) return;
   const deck = shuffled(list);
-  // Offsetting each node by its index and advancing by the node count keeps the
-  // lines on screen from ever landing on the same entry.
+  // Offsetting each node by its index and advancing by the node count keeps
+  // lines sharing a deck from ever landing on the same entry.
   let tick = 0;
   const paint = (fade) => {
     nodes.forEach((node, k) => {
@@ -412,12 +421,13 @@ const cycleCopy = (nodes, list, period) => {
     });
   };
   paint(false);
-  // A period of 0, or a reader who asked for less motion, means the opening
-  // pick stands until the next page load.
+  // A reader who asked for less motion keeps the opening pick until reload.
   if (holdStill || !period) return;
   setInterval(() => { tick += 1; paint(true); }, period);
 };
 
-cycleCopy([...document.querySelectorAll('[data-quip]')], QUIPS, 60000);
-// "Thinking about" settles on one entry per visit instead of cycling.
-cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, 0);
+const quipSets = { hero: QUIPS_HERO, research: QUIPS_RESEARCH, library: QUIPS_LIBRARY };
+Object.keys(quipSets).forEach((slot) => {
+  cycleCopy([...document.querySelectorAll(`[data-quip="${slot}"]`)], quipSets[slot], ROTATE_MS);
+});
+cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, ROTATE_MS);
