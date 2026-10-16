@@ -430,4 +430,5 @@ const quipSets = { hero: QUIPS_HERO, research: QUIPS_RESEARCH, library: QUIPS_LI
 Object.keys(quipSets).forEach((slot) => {
   cycleCopy([...document.querySelectorAll(`[data-quip="${slot}"]`)], quipSets[slot], ROTATE_MS);
 });
-cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, ROTATE_MS);
+// "Thinking about" settles on one entry per visit instead of cycling.
+cycleCopy([...document.querySelectorAll('[data-thinking]')], THINKING, 0);
