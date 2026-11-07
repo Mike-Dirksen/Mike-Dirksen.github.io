@@ -305,6 +305,7 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 .timeline { display: grid; gap: 2rem; }
 .timeline-item { display: grid; grid-template-columns: 10rem 1fr; gap: 1.5rem; }
 .timeline-item p { margin: .25rem 0; }
+.timeline-item small { display: block; margin-top: .45rem; color: var(--muted); font-size: .9rem; }
 .pdf-frame { width: 100%; min-height: 48rem; margin-top: 2rem; border: 1px solid var(--line); background: var(--elevated); }
 
 .filter-bar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; margin-bottom: 2rem; padding: 1rem; background: var(--surface); border-radius: var(--radius); }
