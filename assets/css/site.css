@@ -306,6 +306,10 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 .timeline-item { display: grid; grid-template-columns: 10rem 1fr; gap: 1.5rem; }
 .timeline-item p { margin: .25rem 0; }
 .timeline-item small { display: block; margin-top: .45rem; color: var(--muted); font-size: .9rem; }
+.projects { margin-top: .8rem; }
+.projects summary { color: var(--accent); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.projects ul { margin: .6rem 0 0; padding-left: 1.1rem; display: grid; gap: .4rem; }
+.projects li { color: var(--muted); font-size: .94rem; }
 .pdf-frame { width: 100%; min-height: 48rem; margin-top: 2rem; border: 1px solid var(--line); background: var(--elevated); }
 
 .filter-bar { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; margin-bottom: 2rem; padding: 1rem; background: var(--surface); border-radius: var(--radius); }
@@ -350,6 +354,7 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 :root[data-theme="dark"] .context-strip strong,
 :root[data-theme="dark"] .meta,
 :root[data-theme="dark"] .tag,
+:root[data-theme="dark"] .projects summary,
 :root[data-theme="dark"] .updated-note,
 :root[data-theme="dark"] .editorial-row time,
 :root[data-theme="dark"] .editorial-row .kind {
