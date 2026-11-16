@@ -326,18 +326,26 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
 
 .game-room-head { padding-bottom: clamp(3rem, 7vw, 5rem); }
 .game-shelf { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
-.game-card { display: grid; grid-template-columns: minmax(18rem, 1.12fr) minmax(18rem, .88fr); overflow: hidden; border: 1px solid var(--line); border-radius: .75rem; background: var(--elevated); box-shadow: var(--shadow); }
+/* Compact tiles rather than full-width slabs, so the shelf grows sideways as
+   games are added instead of turning the page into a long scroll. */
+.game-shelf .container { display: grid; gap: 1.25rem; align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr)); }
+.game-card { display: grid; grid-template-columns: 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: .75rem; background: var(--elevated); box-shadow: var(--shadow); }
 /* Surface rather than the fixed dark panel, so the theme-reactive artwork inside
    sits on a ground that moves with it. */
-.game-card-art { display: grid; place-items: center; min-height: 25rem; padding: clamp(1.5rem, 4vw, 3rem); overflow: hidden; background: var(--surface); }
+.game-card-art { display: grid; place-items: center; min-height: 10rem; max-height: 12rem; padding: 1.1rem 1.5rem; overflow: hidden; background: var(--surface); }
 .game-card-art img,
 .game-card-art svg { width: 100%; height: auto; max-height: 100%; object-fit: contain; transition: transform .25s ease; }
 @media (hover: hover) {
   .game-card-art:hover img,
   .game-card-art:hover svg { transform: scale(1.015); }
 }
-.game-card-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(2rem, 5vw, 4rem); }
-.game-card-copy h3 { margin-bottom: 1rem; font-family: var(--display); color: var(--heading-color); font-size: clamp(2rem, 4vw, 3rem); font-weight: 450; }
+.game-card-copy { display: flex; flex-direction: column; gap: .5rem; padding: 1.3rem 1.5rem 1.5rem; }
+.game-card-copy h3 { margin: 0; font-family: var(--display); color: var(--heading-color); font-size: 1.6rem; font-weight: 500; }
+.game-card-copy > p:not(.meta) { margin: 0; font-size: .92rem; }
+.game-card-copy .meta { margin: 0; }
+.game-card-copy .tags { margin: .2rem 0 .3rem; }
+.game-card .game-launch { align-self: start; margin-top: .2rem; }
 .game-card-copy > p:not(.meta) { color: var(--ink-soft); }
 .game-launch { align-self: flex-start; margin-top: 1.6rem; }
 
@@ -427,8 +435,7 @@ h3 { margin: 0 0 .65rem; font-size: 1.3rem; }
   .context-strip { grid-template-columns: repeat(2, 1fr); }
   .timeline-item { grid-template-columns: 1fr; gap: .25rem; }
   .library-grid { grid-template-columns: 1fr; }
-  .game-card { grid-template-columns: 1fr; }
-  .game-card-art { min-height: 14rem; }
+  .game-card-art { min-height: 8.5rem; }
   .footer-wrap { flex-direction: column; }
   .pdf-frame { display: none; }
 }
